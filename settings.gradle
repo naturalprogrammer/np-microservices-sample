@@ -1,0 +1,1 @@
+include ":ms-sample-common", ":ms-sample-gateway", ":ms-sample-service"

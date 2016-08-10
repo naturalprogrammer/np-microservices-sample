@@ -1,0 +1,44 @@
+buildscript {
+
+    ext {
+        springBootVersion = '1.4.0.RELEASE'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+subprojects {
+
+    apply plugin: 'java'
+    apply plugin: 'spring-boot'
+    apply plugin: 'idea'
+
+    // Let's add -parameters to java 8 compiler flags,
+    // so that we can take advantage of parameter name discovery
+    compileJava {
+        options.compilerArgs << '-parameters'
+    }
+
+    // For adding program arguments
+    // See http://stackoverflow.com/questions/23316843#answer-23317071
+    bootRun {
+        if (project.hasProperty('args')) {
+            args project.args.split('\\s+')
+        }
+    }
+
+    repositories {
+        mavenCentral()
+        maven { url "http://repo.spring.io/snapshot" }
+        maven { url "http://repo.spring.io/milestone" }
+    }
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}

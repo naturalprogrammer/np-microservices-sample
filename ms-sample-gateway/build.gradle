@@ -1,0 +1,9 @@
+jar {
+	baseName = 'ms-sample-gateway'
+	version = '0.0.1-SNAPSHOT'
+}
+
+dependencies {
+    compile project(':ms-sample-common')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
