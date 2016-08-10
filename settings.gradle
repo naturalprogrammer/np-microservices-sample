@@ -1,1 +1,1 @@
-include ":ms-sample-common", ":ms-sample-gateway", ":ms-sample-service"
+include ":ms-sample-common", ":ms-sample-gateway", ":ms-sample-service", ":ms-sample-auth"
