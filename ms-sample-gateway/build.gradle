@@ -4,6 +4,21 @@ jar {
 }
 
 dependencies {
+
     compile project(':ms-sample-common')
+
+    compile 'org.springframework.cloud:spring-cloud-starter-zuul'
+    compile 'org.springframework.cloud:spring-cloud-starter-oauth2'
+    compile 'org.springframework.security.oauth:spring-security-oauth2'
+    compile 'org.springframework.cloud:spring-cloud-starter-oauth2'
+    compile 'org.springframework.cloud:spring-cloud-starter-oauth2'
+
+
     testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+dependencyManagement {
+    imports {
+        mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Brixton.SR4'
+    }
 }

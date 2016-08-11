@@ -4,6 +4,10 @@ jar {
 }
 
 dependencies {
+
 	compile project(':ms-sample-common')
+
+	compile 'org.springframework.security.oauth:spring-security-oauth2'
+
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
