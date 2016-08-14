@@ -1,0 +1,112 @@
+{
+	"variables": [],
+	"info": {
+		"name": "NaturalP",
+		"_postman_id": "3ed65150-acda-745d-841c-b437fb4b8c24",
+		"description": "Natural programmer end-points",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "MS Sample",
+			"description": "Microservices sample",
+			"item": [
+				{
+					"name": "Password grant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "var jsonData = JSON.parse(responseBody);\r\npostman.setGlobalVariable(\"accessToken\", jsonData.access_token);\r\npostman.setGlobalVariable(\"refreshToken\", jsonData.refresh_token);\r\n"
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8081/uaa/oauth/token",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Basic Z2F0ZXdheTpzZWNyZXQ=",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "username",
+									"value": "user",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "password",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": "Password grant"
+					},
+					"response": []
+				},
+				{
+					"name": "Server access",
+					"request": {
+						"url": "localhost:8082",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": "Accessing resource server with access token received from password grant"
+					},
+					"response": []
+				},
+				{
+					"name": "Post user approval",
+					"request": {
+						"url": "http://user:password@localhost:8081/uaa/oauth/authorize",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_oauth_approval",
+									"value": "true",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "scope.openid",
+									"value": "true",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": "Post user approval"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
