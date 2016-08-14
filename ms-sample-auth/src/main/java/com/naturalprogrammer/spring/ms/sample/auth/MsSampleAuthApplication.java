@@ -13,6 +13,7 @@ import java.security.Principal;
 
 @SpringBootApplication
 @EnableAuthorizationServer
+@EnableResourceServer
 public class MsSampleAuthApplication {
 
     public static void main(String[] args) {

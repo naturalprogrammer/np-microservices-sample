@@ -36,8 +36,10 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints.accessTokenConverter(accessTokenConverter())
-                .authenticationManager(authenticationManager);
+                .authenticationManager(authenticationManager)
+                .reuseRefreshTokens(true);
     }
+
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -45,8 +47,11 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
                 .withClient(credentials.getClientId())
                 .secret(credentials.getClientSecret())
                 .authorizedGrantTypes("refresh_token", "password")
-                .scopes("openid");
+                .scopes("openid")
+                .accessTokenValiditySeconds(30)
+                .refreshTokenValiditySeconds(0); // non-expiring
     }
+
 
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
