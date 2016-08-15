@@ -18,7 +18,7 @@
 							"listen": "test",
 							"script": {
 								"type": "text/javascript",
-								"exec": "var jsonData = JSON.parse(responseBody);\r\npostman.setGlobalVariable(\"accessToken\", jsonData.access_token);\r\npostman.setGlobalVariable(\"refreshToken\", jsonData.refresh_token);\r\n"
+								"exec": "var jsonData = JSON.parse(responseBody);\r\n\r\npostman.setGlobalVariable(\"accessToken\", jsonData.access_token);\r\n\r\n//var refreshToken = postman.getGlobalVariable(\"refreshToken\");\r\n\r\n// if (refreshToken === null)\r\n    postman.setGlobalVariable(\"refreshToken\", jsonData.refresh_token);\r\n"
 							}
 						}
 					],
@@ -56,6 +56,80 @@
 							]
 						},
 						"description": "Password grant"
+					},
+					"response": []
+				},
+				{
+					"name": "Revoke access token",
+					"request": {
+						"url": "http://localhost:8081/uaa/revoke-token",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{{accessToken}}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": "var jsonData = JSON.parse(responseBody);\r\npostman.setGlobalVariable(\"accessToken\", jsonData.access_token);\r\npostman.setGlobalVariable(\"refreshToken\", jsonData.refresh_token);\r\n"
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:8081/uaa/oauth/token",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{refreshToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "grant_type",
+									"value": "refresh_token",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "refresh_token",
+									"value": "{{refreshToken}}",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "client_id",
+									"value": "gateway",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "client_secret",
+									"value": "secret",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": "Refresh token"
 					},
 					"response": []
 				},
@@ -103,6 +177,26 @@
 							]
 						},
 						"description": "Post user approval"
+					},
+					"response": []
+				},
+				{
+					"name": "Beans in Auth Server",
+					"request": {
+						"url": "localhost:8081/uaa/beans",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
 					},
 					"response": []
 				}

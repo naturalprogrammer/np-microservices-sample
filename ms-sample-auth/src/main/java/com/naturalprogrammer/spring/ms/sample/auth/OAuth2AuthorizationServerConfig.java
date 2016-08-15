@@ -48,7 +48,7 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
                 .secret(credentials.getClientSecret())
                 .authorizedGrantTypes("refresh_token", "password")
                 .scopes("openid")
-                .accessTokenValiditySeconds(30)
+                .accessTokenValiditySeconds(300)
                 .refreshTokenValiditySeconds(0); // non-expiring
     }
 
